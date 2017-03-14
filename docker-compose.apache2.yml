@@ -9,7 +9,7 @@ apache2:
     restart: always
     volumes:
         # app
-        - ./app:/usr/local/apache2/htdocs
+        - ./app:/var/www/html
         # httpd configs
         - ./apache2/conf/:/etc/apache2/:ro
         - ./logs/apache2:/var/log/apache2
@@ -22,7 +22,7 @@ fpm:
     ports:
         - "9000"
     volumes:
-        - ./app:/usr/local/apache2/htdocs
+        - ./app:/var/www/html
         # Your php.ini
         - ./php-fpm/php.ini:/usr/local/etc/php/php.ini:ro
         ### php log file

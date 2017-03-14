@@ -1,4 +1,22 @@
 # web server
+
+### Apache Server Container ##################################
+apache2:
+    build: ./apache2
+    ports:
+        - "80:80"
+        - "443:443"
+    restart: always
+    volumes:
+        # app
+        - ./app:/var/www/html
+        # httpd configs
+        - ./apache2/conf/:/etc/apache2/:ro
+        - ./logs/apache2:/var/log/apache2
+    links:
+        - fpm:php-fpm
+
+### Nginx Server Container ##################################
 nginx:
     image: nginx:latest
     ports:
@@ -7,7 +25,7 @@ nginx:
     restart: always
     volumes:
         # app
-        - ./app:/usr/share/nginx/html
+        - ./app:/var/www/html
         # nginx configs
         - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
         - ./nginx/conf.d/:/etc/nginx/conf.d/:ro
@@ -21,7 +39,7 @@ fpm:
     ports:
         - "9000"
     volumes:
-        - ./app:/usr/share/nginx/html
+        - ./app:/var/www/html
         # Your php.ini
         - ./php-fpm/php.ini:/usr/local/etc/php/php.ini:ro
         ### php log file

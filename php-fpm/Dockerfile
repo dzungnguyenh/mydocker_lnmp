@@ -3,7 +3,7 @@
 ######
 
 FROM php:7.0.5-fpm
-MAINTAINER dungnh <dung.nguyen@asiantech.vn>
+MAINTAINER Dzung Nguyen <dung.nguyen@asiantech.vn>
 
 ######
 # You can install php extensions using docker-php-ext-install
