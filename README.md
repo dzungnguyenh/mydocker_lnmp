@@ -15,7 +15,7 @@ $ docker-compose up nginx
 
 $ docker-compose up apache2
 
-Or you can use docker-composer.apache2.yml to run with Apache2 (rename it to docker-compose.yml of course).
+Or you can use `docker-composer.apache2.yml` to run with Apache2 (rename it to `docker-compose.yml` of course).
 
 ## Command to re-build containers
 
