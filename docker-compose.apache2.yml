@@ -1,0 +1,50 @@
+# web server
+### Apache Server Container ##################################
+
+apache2:
+    build: ./apache2
+    ports:
+        - "80:80"
+        - "443:443"
+    restart: always
+    volumes:
+        # app
+        - ./app:/usr/local/apache2/htdocs
+        # httpd configs
+        - ./apache2/conf/:/etc/apache2/:ro
+        - ./logs/apache2:/var/log/apache2
+    links:
+        - fpm:php-fpm
+
+# php-fpm
+fpm:
+    build: ./php-fpm
+    ports:
+        - "9000"
+    volumes:
+        - ./app:/usr/local/apache2/htdocs
+        # Your php.ini
+        - ./php-fpm/php.ini:/usr/local/etc/php/php.ini:ro
+        ### php log file
+        - ./logs/php:/var/log/fpm
+        # environment:
+        # Set your APP env variables here:
+        # - APP_KEY=
+        # - DB_HOST=
+        # - DB_DATABASE=
+        # - DB_USERNAME=
+        # - DB_PASSWORD=
+    links:
+        - mysql:database_local
+
+# database
+mysql:
+    image: mysql:latest
+    ports:
+        # Allow client to access 3306
+        - "3306:3306"
+    volumes:
+        # NOTE: your data will be stored in ./mysql
+        - ./mysql:/var/lib/mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=root123
